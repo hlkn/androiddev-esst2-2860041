@@ -1,29 +1,20 @@
 package com.example.myapplication
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
-import kotlinx.android.synthetic.main.activity_main.*
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-
-        addSomeViews(count = 5)
-    }
-
-    fun addSomeViews(count: Int) {
-        for (i in 1..count) {
-            val textView = TextView(this)
-            textView.text = "Hey, learner # $i"
-            textView.textSize = 20f
-            my_layout.addView(textView)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.my_layout)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
         }
-
-        val button = Button(this)
-        button.text = "Click me!"
-        my_layout.addView(button)
     }
 }
